@@ -1,20 +1,34 @@
-import csv, sqlite3
+import sqlite3
+import pandas as pd
 
-conn = sqlite3.connect("buddymove.db")
-curs - conn.cursor()
+conn = sqlite3.connect('buddymove_holidayiq.sqlite3')
+curs = conn.cursor()
+review = pd.read_csv('buddymove_holidayiq.csv')
+review.to_sql('review', con=conn, if_exists = 'replace')
 
-curs.execute(
-    'CREATE TABLE bd(User Id, Sports, Religious, NatureTheatre, Shopping, Picnic);'
-)
 
-f =open('module1-introduction-to-sql/assign/buddymove_holiday.csv')
-rows = csv.reader()
-curs.executemany('INSERT INTO db VALUES(?, ?, ?, ?, ?, ?, ?', rows)
+def execute_query(cursor, query):
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print(result)
 
-curs.execute("SELECT * FROM db")
-print(curs.fetchall())
 
-conn.commit()
-conn.close()
+ROW_COUNT= """ 
+SELECT COUNT(*) FROM review;
+"""
 
-print(rows)
+
+print('Row Count:')
+execute_query(curs, ROW_COUNT)
+
+
+USER_COUNT = """
+SELECT COUNT(*)
+FROM review
+WHERE Nature >= 100
+AND Shopping >= 100;
+"""
+
+
+print('Users who love nature and shopping count:')
+execute_query(curs, USER_COUNT)
