@@ -1,0 +1,32 @@
+-- SQLite
+-- SELECT COUNT(*) FROM charactercreator_character;
+
+-- SELECT COUNT(*) FROM armory_item;
+
+-- SELECT COUNT(DISTINCT (name)) 
+-- FROM charactercreator_character;
+
+-- SELECT DISTINCT(name)
+-- FROM charactercreator_character
+-- LIMIT 10;
+
+-- SELECT character_id, name
+-- FROM charactercreator_character
+-- WHERE character_id >= 50
+-- AND character_id < 55;
+
+-- SELECT character_id, name
+-- FROM charactercreator_character
+-- WHERE character_id between 50 AND 54;
+
+--What are the duplicate names??
+-- SELECT name, COUNT(*)
+-- FROM charactercreator_character
+-- GROUP BY name
+-- ORDER BY COUNT(*)DESC
+-- LIMIT 5;
+
+SELECT *
+FROM charactercreator_character as cc
+LEFT JOIN charactercreator_fighter as cf 
+ON cf.character_ptr_id = cc.character_id;
